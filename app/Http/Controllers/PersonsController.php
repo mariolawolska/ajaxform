@@ -10,7 +10,7 @@ use App\Persons;
 class PersonsController extends Controller {
 
     /**
-     * @return View 
+     * @return View 2
      */
     public function home() {
 
