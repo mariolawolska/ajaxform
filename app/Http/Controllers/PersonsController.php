@@ -64,7 +64,7 @@ class PersonsController extends Controller {
             }
         }
 
-
+//        To Do - add ajax validation
 //        $error['status'] = 'Error';
 //        $error['status'] = 'Succes';
 //        $error['email'] = 'Empty';
@@ -78,23 +78,6 @@ class PersonsController extends Controller {
                     'personsJson1' => view('comment.ajaxTable1')->with('persons', $persons)->render(),
                     'countPersonsJson' => view('comment.countPersons')->with('personQty', $countPersons->count())->render(),
                     'personsError' => view('comment.ajaxTableError')->with('error', $error)->render()
-        ]);
-    }
-    /**
-     * Load data to DB by Ajax 
-     * @param Request $request
-     * @return json
-     */
-    public function loadAllComments() {
-
-        $persons = Persons::get();
-
-//        dump($persons->count());
-        
-        return response()->json([
-                    'personsJson1' => view('comment.ajaxTable1')->with('persons', $persons)->render(),
-                    'countPersonsJson' => view('comment.countPersons')->with('personQty', $persons->count())->render(),
-//                    'personsError' => view('comment.ajaxTableError')->with('error', $error)->render()
         ]);
     }
 
