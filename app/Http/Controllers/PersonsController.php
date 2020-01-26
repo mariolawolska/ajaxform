@@ -14,7 +14,7 @@ class PersonsController extends Controller {
      */
     public function home() {
 
-        $persons = Persons::orderBy('id', 'ASC')->get();
+        $persons = Persons::orderBy('id', 'DESC')->get();
         return View::make('home', array('persons' => $persons));
     }
 
@@ -23,7 +23,7 @@ class PersonsController extends Controller {
      */
     public function persons() {
 
-        $persons = Persons::orderBy('id', 'ASC')->get();
+        $persons = Persons::orderBy('id', 'DESC')->get();
         return view('comment.persons', array('persons' => $persons));
     }
 
@@ -40,40 +40,76 @@ class PersonsController extends Controller {
         ]);
 
         $data = $request->all();
-        $this->create_($data);
+        Person::create_($data);
         return back()->with('success', 'Information sent successfully.');
     }
 
     /**
-     * @param array $data
-     * 
-     * @return type
+     * Add data to DB by Ajax 
+     * @param Request $request
+     * @return json
      */
-    public function create_(array $data) {
-
-        $return = Persons::create([
-                    'name' => $data['name'],
-                    'email' => $data['email'],
-                    'comment' => $data['comment']
-        ]);
-
-        return $return;
-    }
-
     public function ajaxRequest(Request $request) {
-
+        $error = '';
         $box = $request->all();
+
         $myValue = array();
         parse_str($box['form'], $myValue);
         if (!empty($myValue['email'])) {
-            $this->create_($myValue);
+            Persons::create_($myValue);
+        } else {
+            if ($request->flow != 'view') {
+//                $error = Persons::ERROR_STATUS['empty'];
+                $error = 'error';
+            }
         }
 
-        $persons = Persons::orderBy('id', 'ASC')->get();
+
+//        $error['status'] = 'Error';
+//        $error['status'] = 'Succes';
+//        $error['email'] = 'Empty';
+//        $error['email'] = 'Incorect';
+
+        $persons = Persons::orderBy('id', 'DESC')->take(Persons::LIMIT)->get();
+        $countPersons = Persons::get();
+
+        
+        return response()->json([
+                    'personsJson1' => view('comment.ajaxTable1')->with('persons', $persons)->render(),
+                    'countPersonsJson' => view('comment.countPersons')->with('personQty', $countPersons->count())->render(),
+                    'personsError' => view('comment.ajaxTableError')->with('error', $error)->render()
+        ]);
+    }
+    /**
+     * Load data to DB by Ajax 
+     * @param Request $request
+     * @return json
+     */
+    public function loadAllComments() {
+
+        $persons = Persons::get();
+
+//        dump($persons->count());
+        
+        return response()->json([
+                    'personsJson1' => view('comment.ajaxTable1')->with('persons', $persons)->render(),
+                    'countPersonsJson' => view('comment.countPersons')->with('personQty', $persons->count())->render(),
+//                    'personsError' => view('comment.ajaxTableError')->with('error', $error)->render()
+        ]);
+    }
+
+    public function destroy(Request $request) {
+
+        $delete = $request->all();
+        $personsObj = Persons::find($delete['id']);
+        $personsObj->delete();
+
+        $persons = Persons::orderBy('id', 'ASC')->take(Persons::LIMIT)->get();
+        $countPersons = Persons::get();
 
         return response()->json([
                     'personsJson1' => view('comment.ajaxTable1')->with('persons', $persons)->render(),
-                    'personsJson2' => view('comment.ajaxTable2')->with('persons', $persons)->render()
+                    'countPersons' => view('comment.countPersons')->with('personQty', $countPersons->count())->render()
         ]);
     }
 
