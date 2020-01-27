@@ -53,27 +53,21 @@ class PersonsController extends Controller {
         $error = '';
         $box = $request->all();
 
+
         $myValue = array();
         parse_str($box['form'], $myValue);
-        if (!empty($myValue['email'])) {
+        if (!empty($myValue['comment'])) {
             Persons::create_($myValue);
         } else {
             if ($request->flow != 'view') {
-//                $error = Persons::ERROR_STATUS['empty'];
                 $error = 'error';
             }
         }
 
-//        To Do - add ajax validation
-//        $error['status'] = 'Error';
-//        $error['status'] = 'Succes';
-//        $error['email'] = 'Empty';
-//        $error['email'] = 'Incorect';
-
         $persons = Persons::orderBy('id', 'DESC')->take(Persons::LIMIT)->get();
         $countPersons = Persons::get();
 
-        
+
         return response()->json([
                     'personsJson1' => view('comment.ajaxTable1')->with('persons', $persons)->render(),
                     'countPersonsJson' => view('comment.countPersons')->with('personQty', $countPersons->count())->render(),
