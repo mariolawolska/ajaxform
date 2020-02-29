@@ -6,3 +6,4 @@ The full functionality can be seen on the site  </br>
 www.ajaxform.wolscy.com/public </br>
 
 <img src = "https://github.com/ubuvolt/ajaxform/blob/master/ajaxForm.jpg" style="width:100%">
+# ajaxform
