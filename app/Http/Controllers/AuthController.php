@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Validator,
-    Redirect,
-    Response;
+use Redirect;
 Use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -14,37 +12,42 @@ use Session;
 class AuthController extends Controller {
 
     public function index() {
-        return view('login');
+        return view('login.login');
     }
 
     public function registration() {
-        return view('registration');
+        return view('login.registration');
     }
+    
 
     /**
      * @param Request $request
      * 
-     * @return type
+     * Validation login details
+     * @return dashboard/login view
      */
     public function postLogin(Request $request) {
-        
+
         request()->validate([
             'email' => 'required',
             'password' => 'required|min:2',
         ]);
 
         $credentials = $request->only('email', 'password');
-        
+
         if (Auth::attempt($credentials)) {
-//            dump(__LINE__);
-            // Authentication passed...
-//            return redirect()->intended('dashboard');
-            return view('dashboard');
+            return view('login.dashboard');
         }
-        
+
         return Redirect::to("login")->withSuccess('Oppes! You have entered invalid credentials');
     }
+    
 
+    /**
+     * @param Request $request
+     * 
+     * redirect to dashboard
+     */
     public function postRegistration(Request $request) {
         request()->validate([
             'name' => 'required',
@@ -55,19 +58,30 @@ class AuthController extends Controller {
 
         $data = $request->all();
 
-        $check = $this->create($data);
+        $this->create($data);
 
         return Redirect::to("dashboard")->withSuccess('Great! You have Successfully loggedin');
     }
 
+    /**
+     * Check auth
+     * 
+     * @return redirect to dashboard/ login view
+     */
     public function dashboard() {
 
         if (Auth::check()) {
             return view('dashboard');
         }
-        return Redirect::to("login")->withSuccess('Opps! You do not have access');
+        return Redirect::to("login")->withSuccess('Enter user name and password');
     }
 
+    
+    /**
+     * Create user account
+     * 
+     * @return User 
+     */
     public function create(array $data) {
         return User::create([
                     'name' => $data['name'],
@@ -75,7 +89,11 @@ class AuthController extends Controller {
                     'password' => Hash::make($data['password'])
         ]);
     }
+    
 
+    /**
+     * @return redirect to login view
+     */
     public function logout() {
         Session::flush();
         Auth::logout();
