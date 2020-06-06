@@ -10,16 +10,16 @@ use App\Persons;
 class PersonsController extends Controller {
 
     /**
-     * @return View 2
+     * @return home View 
      */
     public function home() {
 
         $persons = Persons::orderBy('id', 'DESC')->get();
         return View::make('home', array('persons' => $persons));
     }
-
+   
     /**
-     * @return View
+     * @return persons View 
      */
     public function persons() {
 
@@ -29,7 +29,6 @@ class PersonsController extends Controller {
 
     /**
      * Show the application dashboard.
-     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
@@ -43,7 +42,7 @@ class PersonsController extends Controller {
         Person::create_($data);
         return back()->with('success', 'Information sent successfully.');
     }
-
+    
     /**
      * Add data to DB by Ajax 
      * @param Request $request
@@ -69,23 +68,28 @@ class PersonsController extends Controller {
 
 
         return response()->json([
-                    'personsJson1' => view('comment.ajaxTable1')->with('persons', $persons)->render(),
+                    'personsJson' => view('comment.ajaxTable')->with('persons', $persons)->render(),
                     'countPersonsJson' => view('comment.countPersons')->with('personQty', $countPersons->count())->render(),
                     'personsError' => view('comment.ajaxTableError')->with('error', $error)->render()
         ]);
     }
 
+    /**
+     * Delete comment from persons table
+     * @param Request $request
+     * @return json
+     */
     public function destroy(Request $request) {
 
         $delete = $request->all();
         $personsObj = Persons::find($delete['id']);
         $personsObj->delete();
 
-        $persons = Persons::orderBy('id', 'ASC')->take(Persons::LIMIT)->get();
+        $persons = Persons::orderBy('id', 'DESC')->take(Persons::LIMIT)->get();
         $countPersons = Persons::get();
 
         return response()->json([
-                    'personsJson1' => view('comment.ajaxTable1')->with('persons', $persons)->render(),
+                    'personsJson' => view('comment.ajaxTable')->with('persons', $persons)->render(),
                     'countPersons' => view('comment.countPersons')->with('personQty', $countPersons->count())->render()
         ]);
     }
