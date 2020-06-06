@@ -1,0 +1,45 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25-Jan-2020, 20:22:03
+    Author     : ubuvolt
+*/
+body{
+    margin-top: 10px;
+    color:#000;
+    margin-top: 10px;
+    background-image:url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/28963/form-bk.jpg');
+    background-size: 100%
+}
+
+input, textarea{
+    box-shadow:1px 2px 1px #fff;
+} 
+
+.form-fields{
+    box-shadow: 1px 8px 6px #000; 
+    border:1px solid white; 
+    padding:30px;
+    background: #BC9B78;
+    
+}
+
+tr:hover{background: #91786b;
+      box-shadow: 1px 4px 1px #000}
+
+.form-bg{
+    margin-bottom: 30px;
+    background:  #BC9B78
+}
+.count-box{
+     background: #fff;
+     padding: 15px; 
+     padding-bottom:30px
+}
+.count-no{
+     font-size: 26px; 
+     margin-right: 10px;
+}
