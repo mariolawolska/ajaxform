@@ -2,6 +2,7 @@
 <html>
     @include('layout.head_login')
 
+    
     <body>
         <div class="container-fluid bg">
             <div class="row no-gutter">
