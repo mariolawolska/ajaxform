@@ -10,6 +10,7 @@ $(function () {
     });
 });
 
+
 /**
  * Load Comment Table
  */
@@ -25,10 +26,9 @@ function loadCommentTable(flow) {
             'flow': flow
         },
         beforeSend: function () {
-//                    $('#loaderBox').modal('show');
         },
         success: function (data) {
-            $('#ajaxCommentTable1').html(data.personsJson1);
+            $('#ajaxCommentTable').html(data.personsJson);
             $('#countPersonsBox').html(data.countPersonsJson);
             $('#personsError').html(data.personsError);
         },
@@ -39,11 +39,11 @@ function loadCommentTable(flow) {
         }
     });
 }
+
+
 /**
- * Load Comment Table END
+ * Delete Comment Table
  */
-
-
 function deleteCommentTable(personId) {
 
     if (confirm('Are you sure you want to save this thing into the database?')) {
@@ -57,12 +57,10 @@ function deleteCommentTable(personId) {
                 'id': personId
             },
             beforeSend: function () {
-//                    $('#loaderBox').modal('show');
             },
             success: function (data) {
-                $('#ajaxCommentTable1').html(data.personsJson1);
-//                    $('#ajaxCommentTable2').html(data.personsJson2);
-                    $('#countPersonsBox').html(data.countPersons);
+                $('#ajaxCommentTable').html(data.personsJson);
+                $('#countPersonsBox').html(data.countPersons);
             },
             error: function (xhr, status, error) {
                 console.log(xhr);

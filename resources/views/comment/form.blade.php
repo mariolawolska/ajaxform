@@ -1,7 +1,7 @@
-<div class="col-sm-12 col-md-5 " style="margin-bottom: 30px;background:  #BC9B78 "id="countPersonsBox"></div>
-<div class="col-sm-12 col-md-1 "></div>
-<div class="col-sm-12 col-md-6 form-fields " style="background:  #BC9B78;"><form  id="commentForm" action="" method="post">
-     
+<div class="col-sm-12 col-md-5 form-bg" id="countPersonsBox"></div>
+<div class="col-sm-12 col-md-1"></div>
+<div class="col-sm-12 col-md-6 form-fields"><form  id="commentForm" action="" method="post">
+
         <div class="form-group">
             <label>NAME:</label>
             <input type="text" name="name" class="form-control"  value="{{Auth::user()->name}}" id="name" readonly="readonly" >
@@ -26,12 +26,12 @@
             <label>COMMENT:</label></br>
             <textarea rows="5" cols="50" name="comment" placeholder="Add comment..." id="comment"></textarea>
         </div>
-        
         {{-- Comment END --}}
 
         {{-- Submit --}}
         @include('comment.button.submit')
         {{-- Submit END --}}
+        
         <div class="col-md-4 mt-4">
             <a  href="{{url('logout')}}">Logout</a>
         </div>

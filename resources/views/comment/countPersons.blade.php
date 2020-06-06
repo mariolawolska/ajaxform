@@ -1,3 +1,3 @@
-<div style=" background: #fff; padding: 15px; padding-bottom:30px">
-    TOTAL NUMBER OF COMMENTS:  <span style="font-size: 26px; margin-right: 10px;">{{ $personQty }}<span>
+<div class="count-box">
+    TOTAL NUMBER OF COMMENTS:  <span class="count-no">{{ $personQty }}<span>
 </div>

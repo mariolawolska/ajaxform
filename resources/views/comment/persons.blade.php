@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 
 <html>
-    @include('leyout.head')
+    @include('layout.head')
 
-    <body style="margin-top: 10px; background-image:url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/28963/form-bk.jpg'); background-size: 100%">
+    <body>
         <div class="container">
             <div class="row">
-                <div class="col-12" style="padding-bottom: 40px">
-
+                <div class="col-12" >
                     @include('comment.table')
 
                 </div>
@@ -23,11 +22,9 @@
                     @endif
 
                     @include('comment.form')
-
+                    
                 </div>
             </div>
         </div>
-
     </body>
-
 </html>
