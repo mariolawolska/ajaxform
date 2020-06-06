@@ -28,10 +28,8 @@ Route::get('persons', 'PersonsController@persons');
  * Comments
  */
 Route::post('create', 'PersonsController@store');
-
 Route::get('ajaxRequest', 'PersonsController@ajaxRequest');
 Route::put('ajaxRequest', 'PersonsController@ajaxRequest');
-
 Route::put('destroy', 'PersonsController@destroy');
 
 
